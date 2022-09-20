@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/user-profile")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class UserProfileController {
 
     private final UserProfileService userProfileService;
@@ -32,6 +32,11 @@ public class UserProfileController {
     )
     public void uploadUserProfileImage(@PathVariable("userProfileId") UUID userProfileId,
                                         @RequestParam("file") MultipartFile file) {
-           userProfileService.uploadUserProfileImage(userProfileId, file);
+            userProfileService.uploadUserProfileImage(userProfileId, file);
+    }
+
+    @GetMapping("{userProfileId}/image/download")
+    public byte[] downloadUserProfileImage(@PathVariable("userProfileId") UUID userProfileId) {
+        return userProfileService.downloadUserProfileImage(userProfileId);
     }
 }
